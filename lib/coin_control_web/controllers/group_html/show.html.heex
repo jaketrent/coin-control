@@ -1,0 +1,16 @@
+<.header>
+  Group {@group.id}
+  <:subtitle>This is a group record from your database.</:subtitle>
+  <:actions>
+    <.link href={~p"/admin/group/#{@group}/edit"}>
+      <.button>Edit group</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name">{@group.name}</:item>
+  <:item title="Order">{@group.order}</:item>
+</.list>
+
+<.back navigate={~p"/admin/group"}>Back to group</.back>

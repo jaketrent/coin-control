@@ -20,6 +20,12 @@ defmodule CoinControlWeb.Router do
     get "/", PageController, :home
   end
 
+  scope "/admin", CoinControlWeb do
+    pipe_through :browser
+
+    resources "/group", GroupController
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", CoinControlWeb do
   #   pipe_through :api
