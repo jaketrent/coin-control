@@ -24,6 +24,7 @@ defmodule CoinControlWeb.Router do
     pipe_through :browser
 
     resources "/group", GroupController
+    resources "/item", ItemController
   end
 
   # Other scopes may use custom stacks.
