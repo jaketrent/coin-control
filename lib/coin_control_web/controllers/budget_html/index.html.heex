@@ -1,0 +1,25 @@
+<.header>
+  Listing Budget
+  <:actions>
+    <.link href={~p"/admin/budget/new"}>
+      <.button>New Budget</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="budget" rows={@budget_collection} row_click={&JS.navigate(~p"/admin/budget/#{&1}")}>
+  <:col :let={budget} label="Name">{budget.name}</:col>
+  <:col :let={budget} label="Start">{budget.start}</:col>
+  <:col :let={budget} label="End">{budget.end}</:col>
+  <:action :let={budget}>
+    <div class="sr-only">
+      <.link navigate={~p"/admin/budget/#{budget}"}>Show</.link>
+    </div>
+    <.link navigate={~p"/admin/budget/#{budget}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={budget}>
+    <.link href={~p"/admin/budget/#{budget}"} method="delete" data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>

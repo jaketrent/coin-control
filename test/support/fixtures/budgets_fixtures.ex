@@ -65,4 +65,20 @@ defmodule CoinControl.BudgetsFixtures do
 
     budget_item
   end
+
+  @doc """
+  Generate a budget.
+  """
+  def budget_fixture(attrs \\ %{}) do
+    {:ok, budget} =
+      attrs
+      |> Enum.into(%{
+        end: ~U[2025-04-05 18:10:00Z],
+        name: "some name",
+        start: ~U[2025-04-05 18:10:00Z]
+      })
+      |> CoinControl.Budgets.create_budget()
+
+    budget
+  end
 end

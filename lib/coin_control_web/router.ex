@@ -25,6 +25,7 @@ defmodule CoinControlWeb.Router do
 
     resources "/group", GroupController
     resources "/item", ItemController
+    resources "/budget", BudgetController
   end
 
   # Other scopes may use custom stacks.

@@ -6,8 +6,9 @@ defmodule CoinControl.Budgets.BudgetItem do
     field :actual, :decimal
     field :expected, :decimal
     field :enveloped, :boolean, default: false
-    field :budget_id, :id
-    field :item_id, :id
+
+    belongs_to :budget, CoinControl.Budgets.Budget
+    belongs_to :item, CoinControl.Budgets.Item
 
     timestamps(type: :utc_datetime)
   end

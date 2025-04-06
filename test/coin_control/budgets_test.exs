@@ -230,4 +230,62 @@ defmodule CoinControl.BudgetsTest do
       assert %Ecto.Changeset{} = Budgets.change_budget_item(budget_item)
     end
   end
+
+  describe "budget" do
+    alias CoinControl.Budgets.Budget
+
+    import CoinControl.BudgetsFixtures
+
+    @invalid_attrs %{name: nil, start: nil, end: nil}
+
+    test "list_budget/0 returns all budget" do
+      budget = budget_fixture()
+      assert Budgets.list_budget() == [budget]
+    end
+
+    test "get_budget!/1 returns the budget with given id" do
+      budget = budget_fixture()
+      assert Budgets.get_budget!(budget.id) == budget
+    end
+
+    test "create_budget/1 with valid data creates a budget" do
+      valid_attrs = %{name: "some name", start: ~U[2025-04-05 18:10:00Z], end: ~U[2025-04-05 18:10:00Z]}
+
+      assert {:ok, %Budget{} = budget} = Budgets.create_budget(valid_attrs)
+      assert budget.name == "some name"
+      assert budget.start == ~U[2025-04-05 18:10:00Z]
+      assert budget.end == ~U[2025-04-05 18:10:00Z]
+    end
+
+    test "create_budget/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Budgets.create_budget(@invalid_attrs)
+    end
+
+    test "update_budget/2 with valid data updates the budget" do
+      budget = budget_fixture()
+      update_attrs = %{name: "some updated name", start: ~U[2025-04-06 18:10:00Z], end: ~U[2025-04-06 18:10:00Z]}
+
+      assert {:ok, %Budget{} = budget} = Budgets.update_budget(budget, update_attrs)
+      assert budget.name == "some updated name"
+      assert budget.start == ~U[2025-04-06 18:10:00Z]
+      assert budget.end == ~U[2025-04-06 18:10:00Z]
+    end
+
+    test "update_budget/2 with invalid data returns error changeset" do
+      budget = budget_fixture()
+      assert {:error, %Ecto.Changeset{}} = Budgets.update_budget(budget, @invalid_attrs)
+      assert budget == Budgets.get_budget!(budget.id)
+    end
+
+    test "delete_budget/1 deletes the budget" do
+      budget = budget_fixture()
+      assert {:ok, %Budget{}} = Budgets.delete_budget(budget)
+      assert_raise Ecto.NoResultsError, fn -> Budgets.get_budget!(budget.id) end
+    end
+
+    test "change_budget/1 returns a budget changeset" do
+      budget = budget_fixture()
+      assert %Ecto.Changeset{} = Budgets.change_budget(budget)
+    end
+  end
 end
