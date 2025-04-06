@@ -306,7 +306,7 @@ defmodule CoinControl.Budgets do
 
   """
   def list_budget_item do
-    Repo.all(BudgetItem)
+    Repo.all(BudgetItem) |> Repo.preload(:item)
   end
 
   @doc """
@@ -323,7 +323,7 @@ defmodule CoinControl.Budgets do
       ** (Ecto.NoResultsError)
 
   """
-  def get_budget_item!(id), do: Repo.get!(BudgetItem, id)
+  def get_budget_item!(id), do: Repo.get!(BudgetItem, id) |> Repo.preload(:item)
 
   @doc """
   Creates a budget_item.
@@ -339,8 +339,22 @@ defmodule CoinControl.Budgets do
   """
   def create_budget_item(attrs \\ %{}) do
     %BudgetItem{}
-    |> BudgetItem.changeset(attrs)
+    |> change_budget_item(attrs)
     |> Repo.insert()
+  end
+
+  def change_budget_item(%BudgetItem{} = budget_item, attrs \\ %{}) do
+    budget_id = attrs["budget_id"]
+    budget = if budget_id != nil do get_budget!(budget_id) end
+
+    item_id = attrs["item_id"]
+    item = if item_id != nil do get_item!(item_id) end
+
+    budget_item
+    |> Repo.preload(:budget)
+    |> BudgetItem.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:budget, budget)
+    |> Ecto.Changeset.put_assoc(:item, item)
   end
 
   @doc """
@@ -375,18 +389,5 @@ defmodule CoinControl.Budgets do
   """
   def delete_budget_item(%BudgetItem{} = budget_item) do
     Repo.delete(budget_item)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking budget_item changes.
-
-  ## Examples
-
-      iex> change_budget_item(budget_item)
-      %Ecto.Changeset{data: %BudgetItem{}}
-
-  """
-  def change_budget_item(%BudgetItem{} = budget_item, attrs \\ %{}) do
-    BudgetItem.changeset(budget_item, attrs)
   end
 end

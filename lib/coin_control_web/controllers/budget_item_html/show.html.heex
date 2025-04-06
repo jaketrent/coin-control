@@ -1,0 +1,18 @@
+<.header>
+  Budget item {@budget_item.id}
+  <:subtitle>This is a budget_item record from your database.</:subtitle>
+  <:actions>
+    <.link href={~p"/admin/budget-item/#{@budget_item}/edit"}>
+      <.button>Edit budget_item</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name">{@budget_item.item.name}</:item>
+  <:item title="Actual">{@budget_item.actual}</:item>
+  <:item title="Expected">{@budget_item.expected}</:item>
+  <:item title="Enveloped">{@budget_item.enveloped}</:item>
+</.list>
+
+<.back navigate={~p"/admin/budget-item"}>Back to budget_item</.back>

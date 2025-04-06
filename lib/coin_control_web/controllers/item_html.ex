@@ -12,15 +12,13 @@ defmodule CoinControlWeb.ItemHTML do
   def item_form(assigns)
 
   def group_opts(changeset) do
-    existing_group =
-      changeset
-      |> Ecto.Changeset.get_change(:group, nil)
+    existing_group = Ecto.Changeset.get_change(changeset, :group, nil)
 
     for group <- CoinControl.Budgets.list_group() do
       [
         key: group.name,
         value: group.id,
-        selected: existing_group != nil and group.id == existing_group.id
+        selected: existing_group.data != nil and group.id == existing_group.data.id
       ]
     end
   end

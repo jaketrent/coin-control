@@ -3,8 +3,8 @@ defmodule CoinControl.Budgets.BudgetItem do
   import Ecto.Changeset
 
   schema "budget_item" do
-    field :actual, :decimal
-    field :expected, :decimal
+    field :actual, :decimal, default: nil
+    field :expected, :decimal, default: nil
     field :enveloped, :boolean, default: false
 
     belongs_to :budget, CoinControl.Budgets.Budget

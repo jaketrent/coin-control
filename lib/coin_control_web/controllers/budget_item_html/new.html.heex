@@ -1,0 +1,8 @@
+<.header>
+  New Budget item
+  <:subtitle>Use this form to manage budget_item records in your database.</:subtitle>
+</.header>
+
+<.budget_item_form changeset={@changeset} action={~p"/admin/budget-item"} />
+
+<.back navigate={~p"/admin/budget-item"}>Back to budget_item</.back>

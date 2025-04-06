@@ -1,0 +1,13 @@
+<.simple_form :let={f} for={@changeset} action={@action}>
+  <.error :if={@changeset.action}>
+    Oops, something went wrong! Please check the errors below.
+  </.error>
+  <.input field={f[:actual]} type="number" label="Actual" step="any" />
+  <.input field={f[:expected]} type="number" label="Expected" step="any" />
+  <.input field={f[:enveloped]} type="checkbox" label="Enveloped" />
+  <.input field={f[:budget_id]} type="select" options={budget_opts(@changeset)} label="Budget" />
+  <.input field={f[:item_id]} type="select" options={item_opts(@changeset)} label="Item" />
+  <:actions>
+    <.button>Save Budget item</.button>
+  </:actions>
+</.simple_form>
